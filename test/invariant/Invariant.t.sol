@@ -31,5 +31,9 @@ contract Invariant is StdInvariant, Test{
         poolToken.mint(address(this),STARTING_X); // Here ERC20Mock will take amount into uint256 format only for minting 
         weth.mint(address(this),STARTING_Y);
 
+        poolToken.approve(address(pool),type(uint256).max);
+        weth.approve(address(pool),type(uint256).max);
+
+        pool.deposit(STARTING_Y,STARTING_Y,STARTING_X,uint64(block.timestamp));
     }
 }

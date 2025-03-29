@@ -19,6 +19,7 @@ import { IERC20 } from "forge-std/interfaces/IERC20.sol";
 
 contract PoolFactory {
     error PoolFactory__PoolAlreadyExists(address tokenAddress);
+    //@ Done - Info Not used anywhere
     error PoolFactory__PoolDoesNotExist(address tokenAddress);
 
     /*//////////////////////////////////////////////////////////////
@@ -38,6 +39,7 @@ contract PoolFactory {
                                FUNCTIONS
     //////////////////////////////////////////////////////////////*/
     constructor(address wethToken) {
+        //@auidt - low zero address validation missing
         i_wethToken = wethToken;
     }
 
@@ -48,8 +50,12 @@ contract PoolFactory {
         if (s_pools[tokenAddress] != address(0)) {
             revert PoolFactory__PoolAlreadyExists(tokenAddress);
         }
+        //@Done- Info we can use abi.encodePacked for better gas savage
         string memory liquidityTokenName = string.concat("T-Swap ", IERC20(tokenAddress).name());
+        //@Done-Low 
+        //to get the symbol we should use .symbol() funciton
         string memory liquidityTokenSymbol = string.concat("ts", IERC20(tokenAddress).name());
+
         TSwapPool tPool = new TSwapPool(tokenAddress, i_wethToken, liquidityTokenName, liquidityTokenSymbol);
         s_pools[tokenAddress] = address(tPool);
         s_tokens[address(tPool)] = tokenAddress;
