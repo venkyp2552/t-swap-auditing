@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>findings.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h2 id="high">High</h2>
+<h3 id="h-1-incorrect-fee-calculation-in-tswappoolgetinputamountbasedonoutput-casues-ptotocol-takes-too-many-toknes-from-users-resulting-in-loss-of-fees">[H-1] Incorrect fee calculation in <code>TSwapPool::getInputAmountBasedOnOutput</code> casues ptotocol takes too many toknes from users, resulting in loss of fees.</h3>
+<p><strong>Description:</strong> The <code>getInputAmountBasedOnOutput</code> function is intended to calcaulate amount of tokens user should depoit given an amount tokens as output tokens.However the function currently miscalcualtion the resulting amount.When calculating the fee , it scales the amount by 10_000 instead of 1_00</p>
+<p><strong>Impact:</strong> Ptotocol takes more fees than expected from users.</p>
+<p><strong>Recommended-Mitigation:</strong></p>
+<pre class="hljs"><code><div>function getInputAmountBasedOnOutput(
+        uint256 outputAmount,
+        uint256 inputReserves,
+        uint256 outputReserves
+    )
+        public
+        pure
+        revertIfZero(outputAmount)
+        revertIfZero(outputReserves)
+        returns (uint256 inputAmount)
+    {
+        return
+<span class="hljs-deletion">-         ((inputReserves * outputAmount) * 10000) /((outputReserves - outputAmount) * 997);</span>
+<span class="hljs-addition">+         ((inputReserves * outputAmount) * 1000) /((outputReserves - outputAmount) * 997);</span>
+    }
+</div></code></pre>
+<h3 id="h-2-lack-of-slippage-protection-in-tswappoolswapexactoutput-function-causes-potentinally-recive-way-fewe-tokens">[H-2] Lack of slippage protection in <code>TSwapPool::swapExactOutput</code> function causes potentinally recive way fewe tokens.</h3>
+<p><strong>Description:</strong> The <code>swapExactOutput</code> function does not include any sort of slippage protection.This function is similar to what is done in <code>TSwapPool::swapExactInput</code> where the function specify the <code>minOutputAmount</code>,the <code>swapExactOutput</code> function shiuild specify the <code>maxInputAmount</code>.</p>
+<p><strong>Impact:</strong> If market conditions change before transaction processes, the user could get much worse swap.</p>
+<p><strong>Recommended-Mitigation:</strong> We should include a <code>maxInputAmount</code> so the user only has to spend upto specific amount,can predict how much they will spend on the protocol.</p>
+<ol>
+<li>The Price of 1 WETH right now  is 1,000 USDC</li>
+<li>User inputs a <code>swapExactOutput</code> looking for 1 WETH
+<ol>
+<li>inputToken = USDC</li>
+<li>outputToken=WETH</li>
+<li>outputAmount=1</li>
+<li>deadline=whatever</li>
+</ol>
+</li>
+<li>The function does not offer a maxInput amount</li>
+<li>As the transaction is pending in the mempool, the market chanegs!.And the price move HUGE -&gt; 1 WETH is now 10,000 USDC. 10x more than the user expected.</li>
+<li>The transaction complete, but the user sent the protocal 10,000 USDC instead of expected 1,000 USDC</li>
+</ol>
+<pre class="hljs"><code><div>    function swapExactOutput(
+        IERC20 inputToken,
+        IERC20 outputToken,
+        uint256 outputAmount,
+<span class="hljs-addition">+       uint256 maxInputAmouont        </span>
+        uint64 deadline
+    )
+        public
+        revertIfZero(outputAmount)
+        revertIfDeadlinePassed(deadline)
+        returns (uint256 inputAmount)
+    {
+        uint256 inputReserves = inputToken.balanceOf(address(this));
+        uint256 outputReserves = outputToken.balanceOf(address(this));
+
+        inputAmount = getInputAmountBasedOnOutput(
+            outputAmount,
+            inputReserves,
+            outputReserves
+        );
+    
+<span class="hljs-addition">+        if(inputAmount &gt; maxInputAmouont){</span>
+<span class="hljs-addition">+            revert()</span>
+<span class="hljs-addition">+        }</span>
+        _swap(inputToken, inputAmount, outputToken, outputAmount);
+    }
+</div></code></pre>
+<h3 id="h-3-swapexactoutput-function-called-within-tswappoolsellpooltokens-function-arguments-passed-inccorectly-resulting-expected-outcome-will-not-achivablewill-not-receive-expected-tokens">[H-3] <code>swapExactOutput</code> function called within <code>TSwapPool::sellPoolTokens</code> function arguments passed inccorectly, resulting expected outcome will not achivable(will not receive expected tokens).</h3>
+<p><strong>Description:</strong> The <code>sellPoolTokens</code> function intendedly allow users to sell tokens anda recieve WETH tokens in exchange.Users indicate how many pool tokens they are willing to sell or exchange in this <code>poolTOkenAmount</code> parameter.However, the function currenlty miscalculate the swapped amount</p>
+<p><strong>Impact:</strong> Users will swap the wrong amount of tokens , which is severe disruption of  protocol functionlity.</p>
+<p><strong>Recommended-Mitigation:</strong></p>
+<p>Consider changing the implementation to use <code>swapExactInput</code> instead of <code>swapExactOutput</code>.Note that this would also require changing the <code>sellPoolTokens</code> function to accept a new parameter</p>
+<pre class="hljs"><code><div>function sellPoolTokens(
+        uint256 poolTokenAmount,
+<span class="hljs-addition">+       uint256 minWethToReceive</span>
+    ) external returns (uint256 wethAmount) {
+<span class="hljs-deletion">-        return swapExactOutput(i_poolToken,i_wethToken,poolTokenAmount,i_wethToken,uint64(block.timestamp));</span>
+<span class="hljs-addition">+        return swapExactOutput(i_poolToken,poolTokenAmoun,i_wethToken,minWethToReceive,uint64(block.timestamp));</span>
+
+    }
+</div></code></pre>
+<h3 id="h-4-tswappoolswap-function-extra-tokens-given-to-users-after-evry-swapcount-breaks-the-protocol-invariant-xyk">[H-4] <code>TSwapPool::_swap</code> function extra tokens given to users after evry <code>swapCount</code> breaks the protocol invariant <code>x*y=k</code></h3>
+<p><strong>Description:</strong> The Protocal follows strict invariant of <code>x * y = k</code></p>
+<ul>
+<li><code>x</code> : The balance of the pooltoken</li>
+<li><code>y</code> : The balance of WETH</li>
+<li><code>k</code> : The constant product of  the balance</li>
+</ul>
+<p>This means whenever balances change in protocal, the ratio between the two amounts should remain constant, hence the <code>k</code>. However this is broken extra incentive in the <code>_swap</code> function.Meaning that over the time protocol funds will be drained.</p>
+<p>The followinf code is responsible for this issue</p>
+<pre class="hljs"><code><div>    swap_count++;
+        <span class="hljs-keyword">if</span> (swap_count &gt;= SWAP_COUNT_MAX) {
+            swap_count = <span class="hljs-number">0</span>;
+            outputToken.safeTransfer(msg.sender, <span class="hljs-number">1</span>_000_000_000_000_000_000);
+        }
+</div></code></pre>
+<p><strong>Impact:</strong> A user maliciously drain the protocol of funds by doing lot of swaps and collecting the extra incentive given out by the protocol.</p>
+<p>Most simple put, the protocols core invarinat is borken.</p>
+<p><strong>Prrof Of Concept:</strong></p>
+<ol>
+<li>A user swaps 10 times and collects extra incentievs of <code>1_000_000_000_000_000_000</code> tokens</li>
+<li>That user continous to swaps until protocol funds get drained.</li>
+</ol>
+<details>
+<summary>Proof Of Code</summary>
+</details><pre class="hljs"><code><div>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testInvariantBroken</span>(<span class="hljs-params"></span>) <span class="hljs-title">public</span> </span>{
+        vm.startPrank(liquidityProvider);
+        weth.approve(address(pool), <span class="hljs-number">100e18</span>);
+        poolToken.approve(address(pool), <span class="hljs-number">100e18</span>);
+        pool.deposit(<span class="hljs-number">100e18</span>, <span class="hljs-number">100e18</span>, <span class="hljs-number">100e18</span>, uint64(block.timestamp));
+        vm.stopPrank();
+
+        uint256 outputWeth=<span class="hljs-number">1e17</span>;
+
+        vm.startPrank(user);
+        poolToken.approve(address(pool),type(uint256).max);
+        poolToken.mint(user,<span class="hljs-number">100e18</span>);
+        pool.swapExactOutput(poolToken,weth,outputWeth,uint64(block.timestamp));
+        pool.swapExactOutput(poolToken,weth,outputWeth,uint64(block.timestamp));
+        pool.swapExactOutput(poolToken,weth,outputWeth,uint64(block.timestamp));
+        pool.swapExactOutput(poolToken,weth,outputWeth,uint64(block.timestamp));
+        pool.swapExactOutput(poolToken,weth,outputWeth,uint64(block.timestamp));
+        pool.swapExactOutput(poolToken,weth,outputWeth,uint64(block.timestamp));
+        pool.swapExactOutput(poolToken,weth,outputWeth,uint64(block.timestamp));
+        pool.swapExactOutput(poolToken,weth,outputWeth,uint64(block.timestamp));
+        pool.swapExactOutput(poolToken,weth,outputWeth,uint64(block.timestamp));
+        int256 startingY=int256(weth.balanceOf(address(pool)));
+        int256 expectedDeltY=int256(<span class="hljs-number">-1</span>) * int256(outputWeth);
+        pool.swapExactOutput(poolToken,weth,outputWeth,uint64(block.timestamp));
+        vm.stopPrank();
+        uint256 endingY=weth.balanceOf(address(pool));
+        int256 actualDeltaY=int256(endingY)-int256(startingY);
+        assertEq(actualDeltaY,expectedDeltY);
+    }
+</div></code></pre>
+
+<p><strong>Recommended-Mitigation:</strong>
+Remove the extra inceintive.If you want to keep this in, we should account for the change in the x * y = k protocol invariant. Or we shouuld set aside tokens in the same way we do  with fees.</p>
+<pre class="hljs"><code><div><span class="hljs-deletion">-   swap_count++;</span>
+<span class="hljs-deletion">-        if (swap_count &gt;= SWAP_COUNT_MAX) {</span>
+<span class="hljs-deletion">-            swap_count = 0;</span>
+<span class="hljs-deletion">-            outputToken.safeTransfer(msg.sender, 1_000_000_000_000_000_000);</span>
+<span class="hljs-deletion">-       }</span>
+</div></code></pre>
+<h2 id="medium">Medium</h2>
+<h3 id="m-1-tswappoopdeposit-function-is-missing-deadline-check-causing-transactions-to-complete-after-deadline-reached-also">[M-1] <code>TSwapPoop::deposit</code> function is missing deadline check causing transactions to complete after deadline reached also.</h3>
+<p><strong>Description:</strong> <code>deposit</code> function has paramer called <code>deadline</code> but there no validation, with lack of this validation trasaction will execute after deadline crossed also. Due to this operation addliquidity to the pool might be executed at unexpected times, in market condition where the deposit rate is unfavorable</p>
+<p><strong>Impact:</strong> Transaction could be sent when market conditions is unfavorbale for deposit,even when adding a deadline parameter without validation.</p>
+<p><strong>Prof of Concept:</strong> The <code>deadline</code> parameter is unused.</p>
+<p><strong>Recommended Mitigation:</strong> Consider making following change to the function.</p>
+<pre class="hljs"><code><div>function deposit(
+        uint256 wethToDeposit,
+        uint256 minimumLiquidityTokensToMint,
+        uint256 maximumPoolTokensToDeposit,
+        uint64 deadline
+    )
+        external
+<span class="hljs-addition">+        revertIfDeadlinePassed(deadline)</span>
+        revertIfZero(wethToDeposit)
+        returns (uint256 liquidityTokensToMint)
+    {}
+</div></code></pre>
+<h2 id="low">Low</h2>
+<h3 id="l-1-tswappooladdliquiditymintandtransfer-function-have-liquidityadded-event-parameters-out-of-order">[L-1] <code>TSwapPool::_addLiquidityMintAndTransfer</code> function  have <code>LiquidityAdded</code> event parameters out of order.</h3>
+<p>**Description:**When <code>LiquidityAdded</code> event emitted in in the <code>TSwapPool::_addLiquidityMintAndTransfer</code> function , values logs will emit in incorrect oreder. Where as <code>poolTokensToDeposit</code> should go third position paramter like wise <code>wethToDeposit</code> should come 2nd position.</p>
+<p>**Impact:**Event emission is incorrect where as off-chain functions potentially malfunctioning.</p>
+<p><strong>Recommended-Mitigation:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-deletion">-   emit LiquidityAdded(msg.sender, poolTokensToDeposit, wethToDeposit);</span>
+<span class="hljs-addition">+   emit LiquidityAdded(msg.sender, wethToDeposit, poolTokensToDeposit);</span>
+</div></code></pre>
+<h3 id="l-2-default-value-returned-by-tswappoolswapexactinput-resuslts-incorrect-return-value-given">[L-2] Default value returned by  <code>TSwapPool::swapExactInput</code> resuslts incorrect return value given.</h3>
+<p><strong>Description:</strong> <code>swapExactInput</code> function is expected to return the actaul amount of tokens bought by caller.However while its declares the named return value <code>output</code> it is never assigned as value,nor uses an explicit return statement.</p>
+<p><strong>Impact:</strong> The return value will always be 0, giving incorrect information to the caller.</p>
+<p><strong>Recommended-Mitigation:</strong></p>
+<pre class="hljs"><code><div>        uint256 inputReserves = inputToken.balanceOf(address(this));
+        uint256 outputReserves = outputToken.balanceOf(address(this));
+
+<span class="hljs-deletion">-        uint256 outputAmount = getOutputAmountBasedOnInput(</span>
+            inputAmount,
+            inputReserves,
+            outputReserves
+        );
+<span class="hljs-addition">+         output = getOutputAmountBasedOnInput(</span>
+            inputAmount,
+            inputReserves,
+            outputReserves
+        );
+
+<span class="hljs-deletion">-        if (outputAmount &lt; minOutputAmount) {</span>
+            revert TSwapPool__OutputTooLow(outputAmount, minOutputAmount);
+        }
+<span class="hljs-addition">+        if (output &lt; minOutputAmount) {</span>
+            revert TSwapPool__OutputTooLow(outputAmount, minOutputAmount);
+        }
+
+<span class="hljs-deletion">-        _swap(inputToken, inputAmount, outputToken, outputAmount);</span>
+<span class="hljs-addition">+        _swap(inputToken, inputAmount, outputToken, output);</span>
+</div></code></pre>
+<h2 id="gas">Gas</h2>
+<h3 id="g-1-poolfactorycreatepool-function-should-use-abiencodepacked-for-moe-gas-effient">[G-1] <code>PoolFactory::createPool</code> function should use <code>abi.encodePacked</code> for moe gas effient</h3>
+<p><strong>Description:</strong> Using <code>string.concat</code> will be not more gas efficeint patter instead we can use <code>abi.encodePacked</code>
+<strong>Impact:</strong> Leads to more estimation costs</p>
+<p><strong>Prof of Concept:</strong></p>
+<pre class="hljs"><code><div>string memory liquidityTokenName = string.concat(<span class="hljs-string">"T-Swap "</span>, IERC20(tokenAddress).name());
+</div></code></pre>
+<ul>
+<li>Gas cost is nearly <code>50-100 gas/bytes</code></li>
+</ul>
+<pre class="hljs"><code><div>string memory liquidityTokenName = string.(abi.encodePackekd(<span class="hljs-string">"T-Swap "</span>, IERC20(tokenAddress).name()));
+</div></code></pre>
+<ul>
+<li>Gas cost is nearly <code>30-60 gas/bytes</code>
+-Nealry will save <code>20-40 gas/byte</code></li>
+</ul>
+<p><strong>Recommended Mitigation:</strong> Instead of using <code>string.concat</code> use <code>string(abi.encodePacked)</code></p>
+<details>
+<summary>Code<summary>
+</summary></summary></details><pre class="hljs"><code><div><span class="hljs-deletion">-    string memory liquidityTokenName = string.concat("T-Swap ", IERC20(tokenAddress).name());</span>
+<span class="hljs-addition">+    string memory liquidityTokenName = string.(abi.encodePackekd("T-Swap ", IERC20(tokenAddress).name()));</span>
+</div></code></pre>
+
+<h2 id="informationals">Informationals</h2>
+<h3 id="i-1-poolfactorypoolfactorypooldoesnotexist-not-used-and-should-be-removed">[I-1] <code>PoolFactory::PoolFactory__PoolDoesNotExist</code> not used and should be removed</h3>
+<pre class="hljs"><code><div><span class="hljs-deletion">-  error PoolFactory__PoolDoesNotExist(address tokenAddress);</span>
+</div></code></pre>
+<h3 id="i-2-poolfactoryconstructor-lacking-zero-address-validation">[I-2] <code>PoolFactory::constructor</code> Lacking zero address validation</h3>
+<pre class="hljs"><code><div>constructor(address wethToken) {
+        //@auidt - low zero address validation missing
+<span class="hljs-addition">+       if(wethToken == address(0)){</span>
+<span class="hljs-addition">+            revert zeroAddressAreNotValid();</span>
+<span class="hljs-addition">+        }</span>
+        i_wethToken = wethToken;
+    }
+
+</div></code></pre>
+<h3 id="i-3-poolfactorycreatepool-should-use-symbol-instead-of-name">[I-3] <code>PoolFactory::createPool</code> should use <code>.symbol()</code> instead of <code>.name()</code></h3>
+<pre class="hljs"><code><div><span class="hljs-deletion">- string memory liquidityTokenSymbol = string.concat("ts", IERC20(tokenAddress).name());</span>
+<span class="hljs-addition">+ string memory liquidityTokenSymbol = string.concat("ts", IERC20(tokenAddress).symbol());</span>
+</div></code></pre>
+<h3 id="i-4-tswappoolminimumwethliquidity-constant-varibales-we-can-declare-10e9-instead-1000000000">[I-4] <code>TSwapPool::MINIMUM_WETH_LIQUIDITY</code> constant varibales we can declare <code>10e9</code> instead <code>1_000_000_000</code></h3>
+<pre class="hljs"><code><div><span class="hljs-deletion">- uint256 private constant MINIMUM_WETH_LIQUIDITY = 1_000_000_000;</span>
+<span class="hljs-addition">+ uint256 private constant MINIMUM_WETH_LIQUIDITY = 1e9;</span>
+</div></code></pre>
+<h3 id="i-5-tswappoolliquidityadded-event-should-have-indexed-key-for-better-filteration-especially-if-we-have-more-than-3-arguments">[I-5] <code>TSwapPool::LiquidityAdded</code> event should have <code>indexed</code> key for better filteration especially if we have more than 3 arguments</h3>
+<pre class="hljs"><code><div> event LiquidityAdded(
+        address indexed liquidityProvider,
+<span class="hljs-deletion">-       uint256 wethDeposited,</span>
+<span class="hljs-addition">+       uint256 indexed wethDeposited,</span>
+<span class="hljs-deletion">-       uint256 poolTokensDeposited</span>
+<span class="hljs-addition">+       uint256 poolTokensDeposited </span>
+    );
+</div></code></pre>
+<h3 id="i-6-tswappooldeposit-function-its-not-suggestable-to-emit-constant-variales-everytime">[I-6] <code>TSwapPool::deposit</code> function its not suggestable to emit constant variales everytime</h3>
+<pre class="hljs"><code><div>if (wethToDeposit &lt; MINIMUM_WETH_LIQUIDITY) {
+            revert TSwapPool__WethDepositAmountTooLow(
+<span class="hljs-deletion">-               MINIMUM_WETH_LIQUIDITY,</span>
+                wethToDeposit
+            );
+        }
+</div></code></pre>
+<h3 id="i-6-tswappool-contract-magical-numbers-casuing-messy-tracking">[I-6] <code>TSwapPool</code> contract magical numbers casuing messy tracking</h3>
+<pre class="hljs"><code><div><span class="hljs-addition">+   uint256 private constant POOL_PERCENTAGE=997</span>
+<span class="hljs-addition">+   uint256 private constant POOL_PRECESION=1000</span>
+
+<span class="hljs-deletion">-    uint256 inputAmountMinusFee = inputAmount * 997;</span>
+<span class="hljs-addition">+    uint256 inputAmountMinusFee = inputAmount * POOL_PERCENTAGE;</span>
+
+        uint256 numerator = inputAmountMinusFee * outputReserves;
+<span class="hljs-deletion">-        uint256 denominator = (inputReserves * 1000) + inputAmountMinusFee;</span>
+<span class="hljs-addition">+        uint256 denominator = (inputReserves * POOL_PRECESION) + inputAmountMinusFee;</span>
+        return numerator / denominator;
+</div></code></pre>
+
+</body>
+</html>

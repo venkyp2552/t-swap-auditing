@@ -145,18 +145,12 @@ Most simple put, the protocols core invarinat is borken.
         pool.swapExactOutput(poolToken,weth,outputWeth,uint64(block.timestamp));
         pool.swapExactOutput(poolToken,weth,outputWeth,uint64(block.timestamp));
         pool.swapExactOutput(poolToken,weth,outputWeth,uint64(block.timestamp));
-
         int256 startingY=int256(weth.balanceOf(address(pool)));
         int256 expectedDeltY=int256(-1) * int256(outputWeth);
-
         pool.swapExactOutput(poolToken,weth,outputWeth,uint64(block.timestamp));
         vm.stopPrank();
-
-        
-
         uint256 endingY=weth.balanceOf(address(pool));
         int256 actualDeltaY=int256(endingY)-int256(startingY);
-
         assertEq(actualDeltaY,expectedDeltY);
     }
 ```
